@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="theme-color" content="#2196f3">
+<title>بسم الله الرحمن الرحیم</title>
+<!-- Font embedding link goes here -->
+<!--<link href="http://fonts.googleapis.com/css?family=Roboto:400,300,500,700" rel="stylesheet" type="text/css">-->
+<!--<link href='https://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>-->
+<script>
+var server_url = "http://previsit.ir/api/driver/";
+var networkState;
+var version = 1;
+var version_url = "http://previsit.ir/api/driver/";
+</script>
+<!-- CSS link goes here -->
+<link rel="stylesheet" href="css/framework7.material.css">
+<link rel="stylesheet" href="css/framework7.material.colors.css">
+<link rel="stylesheet" href="css/font-awesome.min.css">
+<link rel="stylesheet" href="css/font-awesome.min.css">
+<link rel="stylesheet" href="css/swipebox.min.css">
+<link rel="stylesheet" href="css/maxframes.css">
+<link rel="stylesheet" href="css/fontiran.css">
+<link rel="stylesheet" href="css/custom.css">
+</head>
+<body class="layout-dark theme-amber" onload="init();">
+<div class="statusbar-overlay"></div>
+<div class="panel-overlay"></div>
+
+<div class="views" >
+  <div class="view view-main">
+    <div class="pages navbar-fixed">
+
+																<div data-page="color-themes" class="page">
+																  <div class="navbar">
+																	<div class="navbar-inner">
+																	  <div class="left"></div>
+																	  <div class="center">خانه هوشمند <span style="color:#ffdd00">زوریل</style></div>
+																	  <div class="right"></div>
+																	</div>
+																  </div>
+<style>
+.theme-amber .navbar, .navbar.theme-amber, .theme-amber .toolbar, .toolbar.theme-amber, .theme-amber .subnavbar, .subnavbar.theme-amber, .theme-amber .searchbar, .searchbar.theme-amber {
+    background-color: #22292d;
+}
+.start-menu{
+	background-image: linear-gradient(to top, #09203f 0%, #537895 100%);
+	background-image: linear-gradient(60deg, #29323c 0%, #485563 100%);
+	background-image: linear-gradient(-20deg, #2b5876 0%, #4e4376 100%);
+	background-image: linear-gradient(60deg, #222220 0%, #243949 100%);
+}
+#menu-continer {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    height: fit-content;
+    margin: auto;
+    padding-bottom: 10%;
+	direction: rtl;
+}
+.home-btn {
+    display: inline-block;
+}
+.home-btn .fa{
+	position: relative !important;
+	font-size: 6vw !important;
+	line-height: 12vw !important;
+	color:#ffdd00 !important;
+    top: 4px;
+    margin-left: 5px;
+}
+.menu-item {
+    width: calc(49% - 4.5vw);
+    display: inline-block;
+    background: #ffffff;
+    border-radius: 500px;
+    min-height: 14vw;
+    padding-top: 2vw;
+    padding-bottom: 2vw;
+    margin-top: 0vw;
+    margin-bottom: 10vw;
+    text-align: center;
+    direction: rtl;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.menu-item.btn_1,.menu-item.btn_2{margin-top: 10vw;}
+.menu-item.btn_1,.menu-item.btn_3{margin-left:3vw;margin-right:3vw;}
+.menu-item.btn_2,.menu-item.btn_4{margin-left:0;margin-right:0;}
+.menu-item.btn_5{width: calc(100% - 7.26vw);margin-left:3vw;margin-right:3vw;}
+h1.color1 {
+    width: fit-content;
+    display: inline-block;
+    font-size: 4vw;
+}
+#footer-warper img {
+    max-width: 200px;
+    width: 80%;
+}
+div#footer-warper {
+    text-align: center;
+    margin-top: 8vw;
+}
+#menu-continer2{}
+.list-block .item-inner:after {
+    background-color: rgba(256, 256, 256, 0.5);
+}
+.list-block ul:after {
+    background-color: rgba(256, 256, 256, 0.5) !important;
+}
+.list-block .item-content {
+    padding-left: 0;
+    padding-right: 16px;
+}
+.item-input-field:after, .input-field:after{background-color: rgba(256, 256, 256, 0.5) !important;}
+.layout-dark .list-block ul:before, .list-block.layout-dark ul:before {
+    background-color: transparent;
+}
+.content-block a.button {
+    text-align: right;
+}
+.setting_forms input[type="text"].style.login3 {
+    direction: ltr;
+    text-align: right;
+}
+</style>
+<script>
+function check_version(){
+	//var text = '{"last_valid_version": 2,"text": "لازم است شما برنامه را بروزرسانی بکنید","link": "https://google.com"}';
+
+	if(navigator.connection.type)
+		networkState = navigator.connection.type;
+	else
+		networkState = navigator.connection.effectiveType;
+		
+	if (networkState == Connection.NONE) {
+		if(window.localStorage.getItem("need_update")!=null)
+		{
+			text = window.localStorage.getItem("need_update");
+			json = $.parseJSON(text);
+			if(version < json.last_valid_version)
+			{
+				myApp.popup(".login-screen", true, true);
+				$(".login-screen #description").html(json.text);
+				$(".login-screen #new_version_link").attr("onclick","loadURL('" + json.link + "');");
+				myApp.popup(".login-screen", true, true);
+			}
+		}
+	}
+	else {
+		$.ajax({
+				url: version_url,//+ "?version=" + version + "&platform=" + device.platform + "&udid=" + window.localStorage.getItem('udid')
+				type: "GET",
+				data: {
+						version: version,
+						platform: device.platform,
+						udid: window.localStorage.getItem('udid'),
+						notification_id: window.localStorage.getItem("notification_id")
+				},
+				success : function(text)
+				{
+					try {
+						json = $.parseJSON(text);
+						if(version < json.last_valid_version)
+						{
+							myApp.popup(".login-screen", true, true);
+							window.localStorage.setItem("need_update",text);
+							$(".login-screen #description").html(json.text);
+							$(".login-screen #new_version_link").attr("onclick","loadURL('" + json.link + "');");
+							myApp.popup(".login-screen", true, true);
+						}
+						else if(window.localStorage.getItem("need_update")!=null)
+							window.localStorage.removeItem("need_update");
+			
+					} catch (e) {
+						console.log("is not json");
+						console.log(text);
+					}				
+				},
+				error: function(jqXHR, exception) {
+					if(window.localStorage.getItem("need_update")!=null)
+					{
+						text = window.localStorage.getItem("need_update");
+						json = $.parseJSON(text);
+						if(version < json.last_valid_version)
+						{
+							myApp.popup(".login-screen", true, true);
+							$(".login-screen #description").html(json.text);
+							$(".login-screen #new_version_link").attr("onclick","loadURL('" + json.link + "');");
+							myApp.popup(".login-screen", true, true);
+						}
+					}
+				},
+		});
+	}
+}
+function alertDismissed(){}
+function goto_local(){
+	if(window.localStorage.getItem("local_ip")==null || window.localStorage.getItem("local_ip")=="")
+	{
+		navigator.notification.alert(
+			'برای استفاده از خدمات این اپلیکیشن، لازم است از طریق منو تنظیمات، اطلاعات مورد نیاز را ثبت نمایید',  // message
+			alertDismissed,         // callback
+			'توجه',            // title
+			'تائید'                  // buttonName
+		);
+	}
+	else
+	{
+		if(navigator.connection.type)
+			networkState = navigator.connection.type;
+		else
+			networkState = navigator.connection.effectiveType;
+
+		if (networkState == Connection.NONE) {
+			navigator.notification.alert(
+				'شما برای استفاده از خدمات این اپلیکیشن لازم است به شبکه داخلی متصل باشید',  // message
+				alertDismissed_check_net,         // callback
+				'توجه',            // title
+				'تائید'                  // buttonName
+			);
+		}
+		else
+			window.location.href = "http://" + window.localStorage.getItem("local_ip") + ":" + window.localStorage.getItem("local_port");
+	}
+}
+function goto_setting(){
+	if(window.localStorage.getItem("local_ip")==null || window.localStorage.getItem("local_ip")=="")
+	{
+		navigator.notification.alert(
+			'برای استفاده از خدمات این اپلیکیشن، لازم است از طریق منو تنظیمات، اطلاعات مورد نیاز را ثبت نمایید',  // message
+			alertDismissed,         // callback
+			'توجه',            // title
+			'تائید'                  // buttonName
+		);
+	}
+	else
+	{
+		if(navigator.connection.type)
+			networkState = navigator.connection.type;
+		else
+			networkState = navigator.connection.effectiveType;
+
+		if (networkState == Connection.NONE) {
+			navigator.notification.alert(
+				'شما برای استفاده از خدمات این اپلیکیشن لازم است به شبکه داخلی متصل باشید',  // message
+				alertDismissed_check_net,         // callback
+				'توجه',            // title
+				'تائید'                  // buttonName
+			);
+		}
+		else
+			window.location.href = "http://" + window.localStorage.getItem("local_path") + "/zooril/index.htm";
+	}
+}
+function goto_web(){
+	if(window.localStorage.getItem("web_ip")==null || window.localStorage.getItem("web_ip")=="")
+	{
+		navigator.notification.alert(
+			'برای استفاده از خدمات این اپلیکیشن، لازم است از طریق منو تنظیمات، اطلاعات مورد نیاز را ثبت نمایید',  // message
+			alertDismissed,         // callback
+			'توجه',            // title
+			'تائید'                  // buttonName
+		);
+	}
+	else
+	{
+		if(navigator.connection.type)
+			networkState = navigator.connection.type;
+		else
+			networkState = navigator.connection.effectiveType;
+
+		if (networkState == Connection.NONE) {
+			navigator.notification.alert(
+				'شما برای استفاده از خدمات این اپلیکیشن به اینترنت نیاز دارید',  // message
+				alertDismissed_check_net,         // callback
+				'توجه',            // title
+				'تائید'                  // buttonName
+			);
+		}
+		else
+			window.location.href = "http://" + window.localStorage.getItem("web_ip") + ":" + window.localStorage.getItem("web_port");
+	}
+}
+function loadURL(url){
+	console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    loadURL click : ' + url);
+	window.open(url, '_system', 'location=yes');
+	return false;
+}
+function ValidateIPaddress(ipaddress) {  
+  if (/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(ipaddress)) {  
+    return (true)  
+  }  
+  //alert("You have entered an invalid IP address!")  
+  return (false)  
+}  
+function save_form(){
+	var message = "";
+	if($("input[name=local_ip]").val()!="" && !ValidateIPaddress($("input[name=local_ip]").val()))
+		message += "آی پی وارد شده برای بخش دسترسی داخلی صحیح نمی باشد\n";
+	if($("input[name=local_ip]").val()!="" && ($("input[name=local_port]").val()=="" || !jQuery.isNumeric($("input[name=local_port]").val())))
+		message += "پورت وارد شده برای بخش دسترسی داخلی صحیح نمی باشد\n";
+	if($("input[name=web_ip]").val()!="" && !ValidateIPaddress($("input[name=web_ip]").val()))
+		message += "آی پی وارد شده برای بخش دسترسی خارجی صحیح نمی باشد\n";
+	if($("input[name=web_ip]").val()!="" && ($("input[name=web_port]").val()=="" || !jQuery.isNumeric($("input[name=web_port]").val())))
+		message += "پورت وارد شده برای بخش دسترسی خارجی صحیح نمی باشد";
+
+	if(message != "")
+	{
+		alert(message);
+		return false;
+	}
+	if($("input[name=local_ip]").val()!="")
+		window.localStorage.setItem("local_ip",$("input[name=local_ip]").val());
+	if($("input[name=local_port]").val()!="")
+		window.localStorage.setItem("local_port",$("input[name=local_port]").val());
+	if($("input[name=web_ip]").val()!="")
+		window.localStorage.setItem("web_ip",$("input[name=web_ip]").val());
+	if($("input[name=web_port]").val()!="")
+		window.localStorage.setItem("web_port",$("input[name=web_port]").val());
+	
+	myApp.mainView.router.load({url: 'index.html'});
+	return true;
+}
+</script>
+	<div class="page-content start-menu" >
+		<div id="menu-continer">
+			<div id="menu-continer2">
+				<div class="content-block menu-item btn_1" onclick="goto_local();">
+					<div class="home-btn" >
+						<i class="fa fa-home" aria-hidden="true" style=""></i>
+					</div>
+					<h1 class="color1" >دسترسی داخلی</h1>
+				</div>
+				<div class="content-block menu-item btn_2" onclick="goto_web();">
+					<div class="home-btn" >
+						<i class="fa fa-globe" aria-hidden="true" style=""></i>
+					</div>
+					<h1 class="color1" >دسترسی خارجی</h1>
+				</div>
+				<div class="content-block menu-item btn_3" onclick="goto_setting();" >
+					<div class="home-btn" >
+						<i class="fa fa-cog" aria-hidden="true" style=""></i>
+					</div>
+					<h1 class="color1" >پنل مدیریت</h1>
+				</div>
+				<a class="content-block menu-item btn_4" href="forms.html" >
+					<div class="home-btn" >
+						<i class="fa fa-wrench" aria-hidden="true" style=""></i>
+					</div>
+					<h1 class="color1" >تنظیمات نرم افزار</h1>
+				</a>
+				<div class="content-block menu-item btn_5" onclick="loadURL('http://qr.zooril.com');" >
+					<div class="home-btn" >
+						<i class="fa fa-info" aria-hidden="true" style=""></i>
+					</div>
+					<h1 class="color1" >درباره ما</h1>
+				</div>
+				
+				<div id="footer-warper" ><img src="img/footer-logo.png" id="footer-logo" /></div>
+			</div>
+		</div>
+	</div>
+																</div>
+																
+    </div>
+  </div>
+</div>
+
+<div class="login-screen">
+  <div class="view">
+    <div class="page ">
+      <div class="page-content login-screen-content gradient">
+        <div class="login-screen-title">
+          <div class="logo main col12" style="font-size: 7vw;width: 100%;max-width: 100%;">نیاز به برورسانی برنامه</div>
+        </div>
+        <div id="description" class="list-block inputs-list" style="direction: rtl;padding: 0 5vw;text-align: center;" ></div>
+        <div class="content-block"><div style="text-align: center;color: black;font-size: 4vw;" id="new_version_link" class="button button-big button-raised">لینک دانلود نسخه جدید</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- JS link goes here --> 
+<script src="phonegap.js"></script>
+<script type="text/javascript" src="js/notification.js"></script>
+<script type="text/javascript" src="js/jquery.min.js"></script> 
+<script type="text/javascript" src="js/framework7.min.js"></script> 
+<script type="text/javascript" src="js/jquery.swipebox.js"></script> 
+<script type="text/javascript" src="js/masonry.pkgd.min.js"></script>
+<script type="text/javascript" src="js/maxframes.js"></script>
+<script>
+function go_back_index() {
+	navigator.notification.confirm(
+		'آیا تمایل به خروج از برنامه را دارید؟',	// message
+		onExitConfirm,								// callback
+		'توجه',										// title
+		['بله','خیر']								// buttonName
+	);
+}
+function init() {
+	document.addEventListener("deviceready", onDeviceReady, false);
+}
+function onDeviceReady() {
+	console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    start onDeviceReady()');
+	
+	if(navigator.connection.type)
+		networkState = navigator.connection.type;
+	else
+		networkState = navigator.connection.effectiveType;
+	
+	if(window.localStorage.getItem('udid') == null)
+		window.plugins.uniqueDeviceID.get(uniqueDeviceIDsuccess_index, uniqueDeviceIDfail_index);
+	function uniqueDeviceIDsuccess_index(udid){window.localStorage.setItem('udid',udid);};
+	function uniqueDeviceIDfail_index(udid){};
+
+	check_version();
+	register_notification();
+}
+
+
+setTimeout(function(){
+	if(!window.cordova)
+	{
+		alert("Error in JS");
+		Connection = {};
+		Connection.NONE = "0000";
+		device = {};
+		device.platform = "ios";
+		setTimeout(function(){
+			if(window.localStorage.getItem("udid")==null)
+				window.localStorage.setItem("udid","test");
+			if(window.localStorage.getItem("notification_id")==null)
+				window.localStorage.setItem("notification_id","test");
+			onDeviceReady();
+		}, 1500);
+	}
+}, 1000);
+</script>
+</body>
+</html>

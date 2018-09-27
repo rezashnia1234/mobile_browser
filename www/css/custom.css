@@ -1,0 +1,7 @@
+﻿.navbar-inner, .toolbar-inner {
+    direction: rtl;
+}
+.navbar .center, .subnavbar .center {
+    direction: rtl;
+    text-align: right;
+}
