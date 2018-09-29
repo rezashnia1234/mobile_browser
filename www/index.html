@@ -12,10 +12,10 @@
 <!--<link href="http://fonts.googleapis.com/css?family=Roboto:400,300,500,700" rel="stylesheet" type="text/css">-->
 <!--<link href='https://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>-->
 <script>
-var server_url = "http://previsit.ir/api/driver/";
+//var server_url = "http://u.zooril.com/";
 var networkState;
 var version = 1;
-var version_url = "http://previsit.ir/api/driver/";
+var version_url = "http://u.zooril.com/";
 </script>
 <!-- CSS link goes here -->
 <link rel="stylesheet" href="css/framework7.material.css">
@@ -226,7 +226,7 @@ function goto_local(){
 			);
 		}
 		else
-			window.location.href = "http://" + window.localStorage.getItem("local_ip") + ":" + window.localStorage.getItem("local_port");
+			window.location.href = "http://" + window.localStorage.getItem("local_ip") + ":" + window.localStorage.getItem("local_port") + "/zooril/index.htm";
 	}
 }
 function goto_setting(){
@@ -255,7 +255,7 @@ function goto_setting(){
 			);
 		}
 		else
-			window.location.href = "http://" + window.localStorage.getItem("local_path") + "/zooril/index.htm";
+			window.location.href = "http://" + window.localStorage.getItem("local_path")  + ":" + window.localStorage.getItem("local_port") + "/zooril/setting.htm";
 	}
 }
 function goto_web(){
@@ -284,7 +284,7 @@ function goto_web(){
 			);
 		}
 		else
-			window.location.href = "http://" + window.localStorage.getItem("web_ip") + ":" + window.localStorage.getItem("web_port");
+			window.location.href = "http://" + window.localStorage.getItem("web_ip") + ":" + window.localStorage.getItem("web_port") + "/zooril/index.htm";
 	}
 }
 function loadURL(url){
