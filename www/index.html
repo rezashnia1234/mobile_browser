@@ -14,8 +14,9 @@
 <script>
 //var server_url = "http://u.zooril.com/";
 var networkState;
-var version = 1;
-var version_url = "http://u.zooril.com/";
+var version		= 1;
+var version_url	= "http://u.zooril.com/";
+var temp_url;
 </script>
 <!-- CSS link goes here -->
 <link rel="stylesheet" href="css/framework7.material.css">
@@ -226,7 +227,29 @@ function goto_local(){
 			);
 		}
 		else
-			window.location.href = "http://" + window.localStorage.getItem("local_ip") + ":" + window.localStorage.getItem("local_port") + "/zooril/index.htm";
+		{
+			myApp.showIndicator();
+			temp_url = "http://" + window.localStorage.getItem("local_ip") + ":" + window.localStorage.getItem("local_port") + "/zooril/index.htm";
+			console.log(temp_url);
+			$.ajax({
+					url: temp_url,
+					type: "GET",
+					data: {},
+					success : function(text)
+					{
+						window.location.href = temp_url;									
+					},
+					error: function(jqXHR, exception) {
+						myApp.hideIndicator();
+						navigator.notification.alert(
+							'شما برای استفاده از خدمات این اپلیکیشن لازم است به شبکه داخلی متصل باشید',  // message
+							alertDismissed_check_net,         // callback
+							'توجه',            // title
+							'تائید'                  // buttonName
+						);
+					},
+			});
+		}
 	}
 }
 function goto_setting(){
@@ -255,7 +278,29 @@ function goto_setting(){
 			);
 		}
 		else
-			window.location.href = "http://" + window.localStorage.getItem("local_path")  + ":" + window.localStorage.getItem("local_port") + "/zooril/setting.htm";
+		{
+			myApp.showIndicator();
+			temp_url = "http://" + window.localStorage.getItem("local_path")  + ":" + window.localStorage.getItem("local_port") + "/zooril/setting.htm";
+			console.log(temp_url);
+			$.ajax({
+					url: temp_url,
+					type: "GET",
+					data: {},
+					success : function(text)
+					{
+						window.location.href = temp_url;									
+					},
+					error: function(jqXHR, exception) {
+						myApp.hideIndicator();
+						navigator.notification.alert(
+							'شما برای استفاده از خدمات این اپلیکیشن لازم است به شبکه داخلی متصل باشید',  // message
+							alertDismissed_check_net,         // callback
+							'توجه',            // title
+							'تائید'                  // buttonName
+						);
+					},
+			});
+		}
 	}
 }
 function goto_web(){
@@ -284,7 +329,29 @@ function goto_web(){
 			);
 		}
 		else
-			window.location.href = "http://" + window.localStorage.getItem("web_ip") + ":" + window.localStorage.getItem("web_port") + "/zooril/index.htm";
+		{
+			myApp.showIndicator();
+			temp_url = "http://" + window.localStorage.getItem("web_ip") + ":" + window.localStorage.getItem("web_port") + "/zooril/index.htm";
+			console.log(temp_url);
+			$.ajax({
+					url: temp_url,
+					type: "GET",
+					data: {},
+					success : function(text)
+					{
+						window.location.href = temp_url;									
+					},
+					error: function(jqXHR, exception) {
+						myApp.hideIndicator();
+						navigator.notification.alert(
+							'شما برای استفاده از خدمات این اپلیکیشن به اینترنت نیاز دارید',  // message
+							alertDismissed_check_net,         // callback
+							'توجه',            // title
+							'تائید'                  // buttonName
+						);
+					},
+			});
+		}
 	}
 }
 function loadURL(url){
