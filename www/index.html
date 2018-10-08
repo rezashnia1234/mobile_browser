@@ -66,6 +66,8 @@ var temp_url;
 .home-btn {
     display: inline-block;
 }
+
+
 .home-btn .fa{
 	position: relative !important;
 	font-size: 6vw !important;
@@ -129,8 +131,45 @@ div#footer-warper {
     direction: ltr;
     text-align: right;
 }
+
+
+
+@media screen and (orientation:landscape) {
+	#menu-continer {
+		position: absolute;
+		top: 42px;
+		bottom: auto;
+		margin: auto;
+		padding-bottom: 0;
+		direction: rtl;
+	}
+	.home-btn .fa{
+		font-size: 6vh !important;
+		line-height: 12vh !important;
+	}
+	.menu-item {
+		width: calc(49% - 4.5vh);
+		min-height: 14vh;
+		padding-top: 2vh;
+		padding-bottom: 2vh;
+		margin-top: 0vh;
+		margin-bottom: 10vh;
+	}
+	.menu-item.btn_1,.menu-item.btn_2{margin-top: 10vh;}
+	.menu-item.btn_1,.menu-item.btn_3{margin-left:3vh;margin-right:3vh;}
+	.menu-item.btn_5{width: calc(100% - 7.26vh);margin-left:3vh;margin-right:3vh;}
+	h1.color1 {
+		font-size: 4vh;
+	}
+	div#footer-warper {
+		margin-top: 8vh;
+	}
+}
 </style>
 <script>
+
+
+
 function check_version(){
 	//var text = '{"last_valid_version": 2,"text": "لازم است شما برنامه را بروزرسانی بکنید","link": "https://google.com"}';
 
@@ -462,6 +501,21 @@ function save_form(){
 <script type="text/javascript" src="js/masonry.pkgd.min.js"></script>
 <script type="text/javascript" src="js/maxframes.js"></script>
 <script>
+window.onresize = function (event) {
+  applyOrientation();
+}
+
+function applyOrientation() {
+	if (window.innerHeight > window.innerWidth) {
+		$("body").addClass("portrait");
+		$("body").removeClass("landscape");
+		//alert("You are now in portrait");
+	} else {
+		$("body").addClass("landscape");
+		$("body").removeClass("portrait");
+		//alert("You are now in landscape");
+	}
+}
 function go_back_index() {
 	navigator.notification.confirm(
 		'آیا تمایل به خروج از برنامه را دارید؟',	// message
@@ -472,6 +526,7 @@ function go_back_index() {
 }
 function init() {
 	document.addEventListener("deviceready", onDeviceReady, false);
+	applyOrientation();
 }
 function onDeviceReady() {
 	console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    start onDeviceReady()');
